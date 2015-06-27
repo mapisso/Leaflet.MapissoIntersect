@@ -1,0 +1,88 @@
+<html>
+<head>
+    <title>Leaflet.Mapisso Intersect Demo</title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css" />	
+    <script src="lib/leaflet/leaflet.js"></script> 
+    <script src="lib/jquery/jquery-1.11.2.min.js"></script> 
+    <link rel="stylesheet" href="lib/Leaflet.draw-master/dist/leaflet.draw.css" />
+    <script src="lib/Leaflet.draw-master/dist/leaflet.draw.js"></script>  
+    <script src="lib/mapissoIntersect/jQueryMapissoAjaxIntersectRequest.js" charset="UTF-8"></script>
+    <script src="lib/mapissoIntersect/Leaflet.MapissoIntersect.js" charset="UTF-8"></script>
+    
+    
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        
+        #map2 {
+            width: 100%;
+            height: 100%; 
+        }
+        .info {
+		    padding: 6px 8px;
+		    font: 12px Arial, Helvetica, sans-serif;
+		    background: white;
+		    background: rgba(255,255,255,0.8);
+		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		    border-radius: 5px;
+		    height:230px;
+		    width:250px;
+		    z-index:3000
+		}
+
+       
+     </style>
+</head>
+<body>
+    
+			<div id="intersectdiv" >				
+				<div id="map2" />
+				
+			</div>
+				
+				<script>
+				
+				var key2 = "165eda2c-1bad-4c87-941d-5acd09230bf4";
+				var map2 = new L.Map('map2').setView([ 39.036252959636606,
+						34.881591796875 ], 5);
+				var tilelayer2 = L
+						.tileLayer(
+								'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+								{
+									attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+								});
+				map2.addLayer(tilelayer2);
+
+				var drawnItems2 = new L.FeatureGroup();
+				map2.addLayer(drawnItems2);
+				var layer1, layer2;
+				var drawControl2 = new L.Control.Draw({
+					draw : {
+						//polyline : false,
+						circle : false,
+						//marker : false
+					}
+				});
+				map2.addControl(drawControl2);
+				map2.on('draw:created', function(e) {
+					var type = e.layerType, layer = e.layer;
+
+					if (layer1 != undefined)
+						drawnItems2.removeLayer(layer1);
+					drawnItems2.addLayer(layer);
+					layer1 = layer2;
+					layer2 = layer;
+
+				});
+				
+				var mIntersect = new L.Control.mapissoIntersect();
+				map2.addControl(mIntersect);
+			
+			</script>
+</body>
+</html>
